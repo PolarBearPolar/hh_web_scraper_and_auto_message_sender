@@ -127,12 +127,15 @@ host = "localhost"
 
 # Adding values
 add_values()
-while len(df.index) < 2000:
-    next_button = driver.find_element_by_css_selector('a[data-qa="pager-next"]')
-    next_button.click()
-    time.sleep(3)
-    add_values()
-    print(f'{len(df.index)} values have been added to the pandas table')
+while len(df.index) < 1000:
+    try:
+        next_button = driver.find_element_by_css_selector('a[data-qa="pager-next"]')
+        next_button.click()
+        time.sleep(3)
+        add_values()
+        print(f'{len(df.index)} values have been added to the pandas table')
+    except:
+        break
     
 # Saving distinct results to postgresql
 df = df.drop_duplicates(subset=['employer_id', 'email'], keep='first').reset_index(drop=True)
